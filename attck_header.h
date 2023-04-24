@@ -87,14 +87,14 @@
  * @note Can be any value between 0 and 4294967295.
  * @note -1 means that the sequence number will be random.
 */
-#define P_TCP_SEQ                   0
+#define P_TCP_SEQ                   -1
 
 /*
  * @brief Defines the TCP packet acknowledgement number.
  * @note Can be any value between 0 and 4294967295.
  * @note -1 means that the acknowledgement number will be random.
 */
-#define P_TCP_ACKSEQ                0
+#define P_TCP_ACKSEQ                -1
 
 /*
  * @brief Defines the TCP header length.
@@ -105,20 +105,59 @@
 /*
  * @brief Defines the TCP packet window size.
  * @note Can be any value between 0 and 65535.
- * @note 1024 is the default value.
+ * @note -1 means that the window size will be random.
 */
-#define P_TCP_WIN                   1024
+#define P_TCP_WIN                   -1
 
-
+/*
+ * @brief A struct that represents the pseudo TCP header.
+ * @note The struct is used to calculate the TCP checksum, and isn't
+ *          intended to be used as a real TCP header.
+ * @note The struct is based on the pseudo TCP header struct from the
+ *         following link: https://www.binarytides.com/raw-sockets-c-code-linux/
+*/
 struct pseudo_tcp
 {
+    // The source IP address.
     u_int32_t saddr;
+
+    // The destination IP address.
     u_int32_t daddr;
+
+    // The mbz field (always 0 by definition).
     u_int8_t mbz;
+
+    // The protocol field (always 6 by definition).
     u_int8_t ptcl;
+
+    // The TCP header length.
     u_int16_t tcpl;
+
+    // The real TCP header itself.
     struct tcphdr tcp;
-    char payload[1500 - 48];
 };
+
+/*
+ * @brief Sends a raw IP packet.
+ * @param iph The IP header to send.
+ * @note The function does not return a value.
+*/
+void send_raw_ip_packet(struct iphdr *iph);
+
+/*
+ * @brief Calculates the IP header checksum.
+ * @param iph The IP header to calculate the checksum for.
+ * @return The calculated checksum.
+*/
+unsigned short in_cksum(unsigned short *buf, int length);
+
+/*
+ * @brief Calculates the TCP header checksum.
+ * @param iph The IP header to calculate the checksum for.
+ * @return The calculated checksum.
+ * @note The function uses the pseudo TCP header struct.
+ * @note The functioN uses the in_cksum function.
+*/
+unsigned short calculate_tcp_checksum(struct iphdr *iph);
 
 #endif

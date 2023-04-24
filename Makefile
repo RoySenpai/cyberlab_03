@@ -12,7 +12,7 @@
 
 # Flags for the compiler and linker.
 CC = gcc
-CFLAGS = -std=c11 -g
+CFLAGS = -Wall -Wextra -Werror -std=c11 -g
 RM = rm -f
 
 # Phony targets - targets that are not files but commands to be executed by make.
@@ -25,7 +25,7 @@ all: Attacker Ping
 ############
 # Programs #
 ############
-Attacker: Attacker.o
+Attacker: Attacker.o Attacker_lib.o
 	$(CC) $(CFLAGS) -o $@ $^
 
 Ping: Ping.o Ping_lib.o
