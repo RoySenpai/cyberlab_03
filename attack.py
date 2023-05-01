@@ -43,8 +43,9 @@ if __name__ == '__main__':
         for j in range(1, 10000):
             counter = counter + 1
             temp = syn_packet(counter)
+            temp = round(temp, 3)
             temp1 = temp1 + temp
-            fp.write("Sequence: " + str(counter) + ". Time: " + str(temp) + ".\n")
+            fp.write(str(counter) + " " + str(temp) + "\n")
 
 
         print("finished loop number " + str(i))
