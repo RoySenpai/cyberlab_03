@@ -87,14 +87,14 @@
  * @note Can be any value between 0 and 4294967295.
  * @note -1 means that the sequence number will be random.
 */
-#define P_TCP_SEQ                   -1
+#define P_TCP_SEQ                   0
 
 /*
  * @brief Defines the TCP packet acknowledgement number.
  * @note Can be any value between 0 and 4294967295.
  * @note -1 means that the acknowledgement number will be random.
 */
-#define P_TCP_ACKSEQ                -1
+#define P_TCP_ACKSEQ                0
 
 /*
  * @brief Defines the TCP header length.
@@ -107,7 +107,7 @@
  * @note Can be any value between 0 and 65535.
  * @note -1 means that the window size will be random.
 */
-#define P_TCP_WIN                   -1
+#define P_TCP_WIN                   0
 
 /*
  * @brief A struct that represents the pseudo TCP header.
