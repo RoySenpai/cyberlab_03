@@ -30,6 +30,8 @@
 #include "attck_header.h"
 
 FILE *fp = NULL;
+double attack_time = 0.0;
+uint32_t attack_count = 0;
 
 // Attacked host = 10.9.0.5
 
@@ -37,7 +39,11 @@ void sigint_handler() {
 	fprintf(stdout, "Exiting...\n");
 
 	if (fp != NULL)
+	{
+		fprintf(fp, "the average time for each packet is: %0.3lf\n", attack_time / attack_count);
+		fprintf(fp, "the time for the whole attack is: %0.3lf\n", attack_time);
 		fclose(fp);
+	}
 
 	exit(EXIT_SUCCESS);
 }
@@ -149,18 +155,19 @@ int main(int argc, char **argv) {
 			gettimeofday(&end, NULL);
 
 			double time_taken = ((end.tv_sec - start.tv_sec) * 1000.0) + ((end.tv_usec - start.tv_usec) / 1000.0);
+			attack_time += time_taken;
+			++attack_count;
 
-			fprintf(fp, "%lu %0.3lf\n", count, time_taken);
+			fprintf(fp, "Sequence: %lu. Time: %0.3lf.\n", count, time_taken);
 		}
-
-		// This is to prevent the attacker from being blocked by the internal firewall of the attacker machine.
-		// If we send too many packets in a short period of time, sendto() will return -1 and set errno to EPERM.
-		sleep(1);
 
 		fprintf(stdout, "Completed %lu%% (%lu out of 1,000,000 packets sent).\n", (long unsigned int)(((double)count / 1000000) * 100), count);
 	}
 
 	fprintf(stdout, "Successfully sent %lu packets.\n", count);
+
+	fprintf(fp, "the average time for each packet is: %0.3lf\n", attack_time / 1000000);
+	fprintf(fp, "the time for the whole attack is: %0.3lf\n", attack_time);
 
 	fclose(fp);
 

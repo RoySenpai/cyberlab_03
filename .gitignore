@@ -211,3 +211,5 @@ dkms.conf
 .vscode/c_cpp_properties.json
 .vscode/tasks.json
 .vscode/settings.json
+
+syns_results_c.txt
