@@ -48,7 +48,7 @@ void send_raw_ip_packet(struct iphdr *iph) {
 		exit(EXIT_FAILURE);
 	}
 
-	sendto(socketfd, iph, ntohs(iph->tot_len), 0, (struct sockaddr *)&dest_info, sizeof(dest_info));
+	while (sendto(socketfd, iph, ntohs(iph->tot_len), 0, (struct sockaddr *)&dest_info, sizeof(dest_info)) < 0);
 
 	close(socketfd);
 }

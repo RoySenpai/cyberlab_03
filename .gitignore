@@ -212,4 +212,5 @@ dkms.conf
 .vscode/tasks.json
 .vscode/settings.json
 
-syns_results_c.txt
+# Text editor files
+*.txt

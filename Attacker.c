@@ -58,45 +58,16 @@ int main(int argc, char **argv) {
 	char src_ip[INET_ADDRSTRLEN] = {0};
 
 	size_t count = 0;
-	
-	int mode = -1;
 
 	signal(SIGINT, sigint_handler);
 
 	if (argc < 2)
 	{
-		fprintf(stderr, "Usage: %s <target IP> [-cp]\n", *argv);
+		fprintf(stderr, "Usage: %s <target IP>\n", *argv);
 		return EXIT_FAILURE;
 	}
 
-	else if (argc == 3)
-	{
-		if (strcmp(*(argv + 2), "-c") == 0)
-		{
-			fprintf(stdout, "C mode\n");
-			mode = 1;
-		}
-
-		else if (strcmp(*(argv + 2), "-p") != 0)
-		{
-			fprintf(stdout, "Python mode\n");
-			mode = 2;
-		}
-
-		else
-		{
-			fprintf(stderr, "Usage: %s <target IP> [-cp]\n", *argv);
-			return EXIT_FAILURE;
-		}
-	}
-
-	else
-	{
-		fprintf(stderr, "Usage: %s <target IP> [-cp]\n", *argv);
-		return EXIT_FAILURE;
-	}
-
-	fp = fopen((mode == 1 ? ATTK_LOG_FILE_C:ATTK_LOG_FILE_P), "w");
+	fp = fopen(ATTK_LOG_FILE, "w");
 
 	if (fp == NULL)
 	{
@@ -158,7 +129,7 @@ int main(int argc, char **argv) {
 			attack_time += time_taken;
 			++attack_count;
 
-			fprintf(fp, "Sequence: %lu. Time: %0.3lf.\n", count, time_taken);
+			fprintf(fp, "%lu %lf\n", count, time_taken);
 		}
 
 		fprintf(stdout, "Completed %lu%% (%lu out of 1,000,000 packets sent).\n", (long unsigned int)(((double)count / 1000000) * 100), count);

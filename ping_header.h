@@ -43,10 +43,10 @@
 /*
  * @brief Defines the wait time in ms after receiving an ICMP ECHO REPLAY packet.
  * @note This is used to prevent the program from sending too many ICMP ECHO REQUEST packets.
- * @note The value is in microseconds.
+ * @note The value is in seconds.
  * @note The default value is 5 seconds.
 */
-#define PING_WAIT_TIME      (5000 * 1000)
+#define PING_WAIT_TIME      5
 
 /*
  * @brief Log files name for the C mode.

@@ -1,6 +1,6 @@
 #################################################################################
 # 	Cyber Laboratory Course Assignment 3 Makefile				#
-# 	Authors: Roy Simanovich and Lidor Keren Yehushua (c) 2023			#
+# 	Authors: Roy Simanovich and Lidor Keren Yehushua (c) 2023		#
 # 	Description: This Makefile compiles the programs and libraries 		#
 # 				Date: 2023-05					#
 # 			Course: Cyber Laboratory				#
@@ -41,4 +41,4 @@ Ping: Ping.o Ping_lib.o
 # Cleanup files #
 #################
 clean:
-	$(RM) *.gch *.o *.a *.so *.dll *.dylib stnc
+	$(RM) *.gch *.o *.a *.so *.dll *.dylib Attacker Ping

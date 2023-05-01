@@ -32,6 +32,9 @@
 
 FILE* logFile;
 
+uint32_t numberOfPings = 0;
+double totalPingPongTime = 0.0;
+
 /*
  * @brief Signal handler
  * @param signal Signal number
@@ -39,7 +42,9 @@ FILE* logFile;
  * @note Used to clean up resources.
 */
 void signalHandler() {
-    if (logFile != NULL) {
+    if (logFile != NULL)
+    {
+        fprintf(logFile, "The average time for each ping is: %0.3lf\n", totalPingPongTime / numberOfPings);
         fclose(logFile);
     }
 
@@ -118,12 +123,15 @@ int main(int argc, char **argv) {
         gettimeofday(&end, NULL);
 
         pingPongTime = ((end.tv_sec - start.tv_sec) * 1000.0) + ((end.tv_usec - start.tv_usec) / 1000.0);
+        totalPingPongTime += pingPongTime;
+        ++numberOfPings;
+
         iphdr_res = (struct iphdr *)response;
         icmphdr_res = (struct icmphdr *)(response + iphdr_res->ihl*4);
 
         inet_ntop(AF_INET, &(iphdr_res->saddr), responseAddr, INET_ADDRSTRLEN);
 
-        fprintf(logFile, "%d %0.3lf\n", ntohs(icmphdr_res->un.echo.sequence), pingPongTime);
+        fprintf(logFile, "%hu %lf\n", ntohs(icmphdr_res->un.echo.sequence), pingPongTime);
 
         printf("%ld bytes from %s: icmp_seq=%d ttl=%d time=%0.3lf ms\n", 
         bytes_received, 
@@ -132,8 +140,10 @@ int main(int argc, char **argv) {
         iphdr_res->ttl, 
         pingPongTime);
 
-        sleep(5);
+        sleep(PING_WAIT_TIME);
     }
+
+    fprintf(logFile, "The average time for each ping is: %0.3lf\n", totalPingPongTime / numberOfPings);
 
     fclose(logFile);
 

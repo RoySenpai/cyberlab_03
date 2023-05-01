@@ -23,16 +23,10 @@
 #include <linux/tcp.h>
 
 /*
- * @brief Log files name for the C mode.
+ * @brief Log files name.
  * @note The default value is "syns_results_c.txt".
 */
-#define ATTK_LOG_FILE_C "syns_results_c.txt"
-
-/*
- * @brief Log files name for the Python mode.
- * @note The default value is "syns_results_p.txt".
-*/
-#define ATTK_LOG_FILE_P "syns_results_p.txt"
+#define ATTK_LOG_FILE "syns_results_c.txt"
 
 /*
  * @brief Defines the invalid socket constant.
