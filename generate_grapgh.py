@@ -27,7 +27,7 @@ def generate_graph(name, name2, linebreak):
             title="packet sending time vs number of packets sent.")
             
         # Make the y axis as logarithmic scale
-       	ax.set_yscale('log')
+        ax.set_yscale('log')
         	
         fig.savefig(name2)
     

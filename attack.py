@@ -53,7 +53,7 @@ if __name__ == '__main__':
     end1 = time()
     the_whole_time_for_the_attack = end1 - start1
 
-    fp.write("the average time for each packet is: " + str(temp1/counter))
+    fp.write("the average time for each packet is: " + str(temp1/counter) +"\n")
     fp.write("the time for the whole attack is: " + str(the_whole_time_for_the_attack))
     fp.close()
 
